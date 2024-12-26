@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { add } from "../store/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 function Details() {
+    const [amount, setAmount] = useState(1);
     const [product, setProduct] = useState({});
     const { id } = useParams();
     const [selectedColor, setSelectedColor] = useState("");
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (id) {
@@ -26,6 +31,26 @@ function Details() {
                 });
         }
     }, []);
+    function handleAdd(e) {
+        e.preventDefault();
+        let data = {
+            id: product.id,
+            count: amount,
+            color: selectedColor,
+            product,
+        };
+        dispatch(add(data));
+        toast.success("Product is Added", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
 
     return (
         <div>
@@ -93,10 +118,39 @@ function Details() {
                                         }
                                     )}
                             </div>
+                            <div className="">
+                                <h1 className="text-[#394E6A] text-[16px] font-bold">
+                                    Amount
+                                </h1>
+                                <select
+                                    className="w-[300px] p-3 mb-10 border-[1px] rounded-md  border-[#463AA1] mt-3"
+                                    value={amount}
+                                    onChange={(e) => {
+                                        setAmount(e.target.value);
+                                    }}
+                                >
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                            <button
+                                className="p-3 bg-[#463AA1] mb-[100px] text-[14px] text-[#D1D4ED] font-bold rounded-md"
+                                onClick={handleAdd}
+                            >
+                                ADD TO BAG
+                            </button>
                         </div>
                     </div>
                 )}
             </div>
+            <ToastContainer />
         </div>
     );
 }

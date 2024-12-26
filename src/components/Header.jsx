@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import image from "../images/cartImg.svg";
+import { useSelector } from "react-redux";
 
 function Header() {
+    const cart = useSelector((state) => state.cart);
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        let sum = 0;
+        cart.length > 0 &&
+            cart.forEach((value) => {
+                sum += Number(value.count);
+            });
+        setCount(sum);
+    }, [cart]);
+
     return (
         <div>
             <div className="top bg-[#021431] p-2">
@@ -39,7 +52,7 @@ function Header() {
                         <li className="headLink">
                             <NavLink
                                 to="/"
-                                className={({isActive }) =>
+                                className={({ isActive }) =>
                                     isActive ? "active" : "nonactive"
                                 }
                             >
@@ -68,10 +81,18 @@ function Header() {
                         </li>
                     </ul>
                     <div className="relative flex">
-                        <Link to='/cart'>
-                            <img className="" src={image} width={30} height={30} alt="" />
+                        <Link to="/cart">
+                            <img
+                                className=""
+                                src={image}
+                                width={30}
+                                height={30}
+                                alt=""
+                            />
                         </Link>
-                        <h1 className="absolute heroCounter right-[-15px] px-2  bg-[#057AFF] text-[10px] text-white rounded-full">1</h1>
+                        <h1 className="absolute heroCounter right-[-15px] px-2  bg-[#057AFF] text-[10px] text-white rounded-full">
+                            {count}
+                        </h1>
                     </div>
                 </div>
             </div>
