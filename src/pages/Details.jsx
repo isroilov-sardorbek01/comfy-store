@@ -67,7 +67,7 @@ function Details() {
                         Products
                     </Link>
                 </div>
-                {product.id && (
+                {product.id ? (
                     <div className="flex justify-between gap-2">
                         <div className="left">
                             <img
@@ -148,6 +148,8 @@ function Details() {
                             </button>
                         </div>
                     </div>
+                ) : (
+                    <h1>LOADING...</h1>
                 )}
             </div>
             <ToastContainer />

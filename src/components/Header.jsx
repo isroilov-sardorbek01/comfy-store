@@ -16,6 +16,8 @@ function Header() {
         setCount(sum);
     }, [cart]);
 
+   
+
     return (
         <div>
             <div className="top bg-[#021431] p-2">
@@ -90,7 +92,9 @@ function Header() {
                                 alt=""
                             />
                         </Link>
-                        <h1 className="absolute heroCounter right-[-15px] px-2  bg-[#057AFF] text-[10px] text-white rounded-full">
+                        <h1
+                            className="absolute heroCounter right-[-15px] px-2  bg-[#057AFF] text-[10px] text-white rounded-full"
+                        >
                             {count}
                         </h1>
                     </div>
