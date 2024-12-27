@@ -21,11 +21,11 @@ const cartSlice = createSlice({
         remove: (state, action) => {
             return state.filter(
                 (value) =>
-                    value.id !== action.payload.id &&
-                    value.color == action.payload.color
+                    value.id !== action.payload.id ||
+                    value.color !== action.payload.color
             );
         },
-        clear: (state, action) => {
+        clear: (state) => {
             state = [];
         },
         update: (state, action) => {
